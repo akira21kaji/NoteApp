@@ -29,6 +29,10 @@ function App() {
     console.log(notes);
   };
 
+  const onDeleteAllNotes = () => {
+    setNotes([]);
+  }
+
   const onDeleteNote = (id) => {
     const filterNotes = notes.filter((note) => note.id !== id);
     setNotes(filterNotes);
@@ -59,6 +63,7 @@ function App() {
       onDeleteNote={onDeleteNote}
       activeNote={activeNote}
       setActiveNote={setActiveNote}
+      onDeleteAllNotes={onDeleteAllNotes}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/>
     </div>

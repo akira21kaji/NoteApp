@@ -1,22 +1,31 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({ onAddNote , notes, onDeleteNote, activeNote, setActiveNote}) => {
+const Sidebar = ({ 
+  onAddNote , 
+  notes, 
+  onDeleteNote, 
+  activeNote, 
+  setActiveNote, 
+  onDeleteAllNotes}) => {
+    
   const [sortOrder, setSortOrder] = useState("");
+  const [searchText, setSearchText] = useState("");
   
-  const sortedNotes = notes.sort((a,b) => {
-    switch(sortOrder){
-      case "createdAsc":
-        return a.createdAt - b.createdAt;
-      case "createdDesc":
-        return b.createdAt - a.createdAt;
-      case "modifiedAsc":
-        return a.modifiedAt - b.modifiedAt;
-      case "modifiedDesc":
-        return b.modifiedAt - a.modifiedAt;
-      default:
-        return notes;
-    }})
+  
+  const sortedNotes = notes.sort((a, b) => {
+    const sortOptions = {
+      createdAsc: a.createdAt - b.createdAt,
+      createdDesc: b.createdAt - a.createdAt,
+      modifiedAsc: a.modifiedAt - b.modifiedAt,
+      modifiedDesc: b.modifiedAt - a.modifiedAt,
+    };
+    return sortOptions[sortOrder] || 0;
+  });
+  
+  const filterNotes = sortedNotes.filter((note) => 
+    note.title.toLowerCase().includes(searchText.toLowerCase())
+    );
 
   return (
     <div className="app-sidebar">
@@ -32,8 +41,12 @@ const Sidebar = ({ onAddNote , notes, onDeleteNote, activeNote, setActiveNote}) 
         </div>
         <button onClick={onAddNote}>追加</button>
       </div>
+      <div className="app-sidebar-search">
+        <input type="text" placeholder="検索" onChange={(e) => setSearchText(e.target.value)}/>
+        <button className="allDeleteButton" onClick={onDeleteAllNotes}>全削除</button>
+      </div>
       <div className="app-sidebar-notes">
-        {sortedNotes.map((note) => (
+        {filterNotes.map((note) => (
           <div 
             className={`app-sidebar-note ${note.id === activeNote && "active"}`}
             key={note.id} 

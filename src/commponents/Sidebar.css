@@ -58,3 +58,27 @@ button {
 .sortButton {
     display: flex;
 }
+
+.app-sidebar-search {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.allDeleteButton {
+    background-color: transparent;
+    border: none;
+    color: #ff0000;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.allDeleteButton:hover {
+    background-color: red;
+    color: #fff;
+    font-weight: bold;
+}
+
