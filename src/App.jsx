@@ -23,11 +23,15 @@ function App() {
       id: uuid(),
       title: "",
       content: "",
-      modDate: Date.now(),
+      createdAt: Date.now(),
     };
     setNotes([...notes, newNote]);
     console.log(notes);
   };
+
+  const onDeleteAllNotes = () => {
+    setNotes([]);
+  }
 
   const onDeleteNote = (id) => {
     const filterNotes = notes.filter((note) => note.id !== id);
@@ -59,6 +63,7 @@ function App() {
       onDeleteNote={onDeleteNote}
       activeNote={activeNote}
       setActiveNote={setActiveNote}
+      onDeleteAllNotes={onDeleteAllNotes}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/>
     </div>
