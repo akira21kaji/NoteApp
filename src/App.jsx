@@ -23,7 +23,7 @@ function App() {
       id: uuid(),
       title: "",
       content: "",
-      modDate: Date.now(),
+      createdAt: Date.now(),
     };
     setNotes([...notes, newNote]);
     console.log(notes);

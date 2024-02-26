@@ -34,7 +34,7 @@ button {
     transition: all 0.3s;
 }
 
-.sidbar-note-title {
+.sidebar-note-title {
     display: flex;
     justify-content: space-between;
 }
@@ -53,4 +53,8 @@ button {
 
 .app-sidebar-note.active {
     background-color: #ffadad;
+}
+
+.sortButton {
+    display: flex;
 }

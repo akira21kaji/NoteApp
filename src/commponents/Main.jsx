@@ -10,7 +10,7 @@ const Main = ({activeNote, onUpdateNote}) => {
     onUpdateNote({
       ...activeNote,
       [key] : value,
-      modDate: Date.now(),
+      modifiedAt: Date.now(),
     });
   };
 

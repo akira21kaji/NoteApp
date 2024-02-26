@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sidebar.css";
 
 const Sidebar = ({ onAddNote , notes, onDeleteNote, activeNote, setActiveNote}) => {
-
-  const sortedNotes = notes.sort((a,b) => b.modDate - a.modDate);
+  const [sortOrder, setSortOrder] = useState("");
+  
+  const sortedNotes = notes.sort((a,b) => {
+    switch(sortOrder){
+      case "createdAsc":
+        return a.createdAt - b.createdAt;
+      case "createdDesc":
+        return b.createdAt - a.createdAt;
+      case "modifiedAsc":
+        return a.modifiedAt - b.modifiedAt;
+      case "modifiedDesc":
+        return b.modifiedAt - a.modifiedAt;
+      default:
+        return notes;
+    }})
 
   return (
     <div className="app-sidebar">
       <div className="app-sidebar-header">
         <h1>ノート</h1>
+        <div className="sortButton">
+          <p>追加日</p>
+          <button onClick={() => setSortOrder("createdAsc")}>▲昇順</button>
+          <button onClick={() => setSortOrder("createdDesc")}>▼降順</button>
+          <p>修正日</p>
+          <button onClick={() => setSortOrder("modifiedAsc")}>▲昇順</button>
+          <button onClick={() => setSortOrder("modifiedDesc")}>▼降順</button>
+        </div>
         <button onClick={onAddNote}>追加</button>
       </div>
       <div className="app-sidebar-notes">
@@ -18,12 +39,16 @@ const Sidebar = ({ onAddNote , notes, onDeleteNote, activeNote, setActiveNote}) 
             key={note.id} 
             onClick={() => setActiveNote(note.id)}
           >
-            <div className="sidbar-note-title">
+            <div className="sidebar-note-title">
               <strong>{note.title}</strong>
               <button onClick={() => onDeleteNote(note.id)}>削除</button>
             </div>
             <p>{note.content}</p>
-            <small>最後の修正日:{new Date(note.modDate).toLocaleDateString("ja-JP",{
+            <small>最初の追加日:{new Date(note.createdAt).toLocaleDateString("ja-JP",{
+              hour: "2-digit",
+              minute: "2-digit",
+            })}</small>
+            <small>最後の修正日:{new Date(note.modifiedAt).toLocaleDateString("ja-JP",{
               hour: "2-digit",
               minute: "2-digit",
             })}</small>
